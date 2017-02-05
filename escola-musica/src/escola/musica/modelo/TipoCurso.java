@@ -6,7 +6,7 @@ public enum TipoCurso
 	CORDAS("Cordas"),
 	MADEIRAS("Madeiras"),
 	METAIS("Metais"),
-	PERCUSSAO("Percussao");
+	PERCUSSAO("Percusão");
 	
 	private String label;
 	
