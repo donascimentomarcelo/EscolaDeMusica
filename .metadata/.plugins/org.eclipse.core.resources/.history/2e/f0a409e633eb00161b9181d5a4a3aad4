@@ -1,0 +1,5 @@
+package escola.musica.modelo;
+
+public class Curso {
+
+}
