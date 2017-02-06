@@ -1,5 +1,7 @@
 package escola.musica.dao;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import escola.musica.modelo.Curso;
@@ -19,5 +21,28 @@ public class CursoDAO {
 			entityManager.getTransaction().commit();
 			//fecha a conexão
 			entityManager.close();
+		}
+		
+		@SuppressWarnings("unchecked")
+		public List<Curso> listarTodos()
+		{
+			EntityManager entityManager = JPAUtil.getEntityManager();
+			//retorna a lista de consulta
+			return entityManager.createQuery("from Curso").getResultList();
+		}
+
+		public void excluir(Curso curso) {
+			EntityManager entityManager = JPAUtil.getEntityManager();
+
+			entityManager.getTransaction().begin();
+			//Faz um merge para vincular o curso ao banco
+			curso = entityManager.merge(curso);
+			
+			entityManager.remove(curso);
+			
+			entityManager.getTransaction().commit();
+			
+			entityManager.close();
+			
 		}
 }
