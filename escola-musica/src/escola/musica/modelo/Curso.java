@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -24,6 +26,8 @@ public class Curso {
 	private TipoCurso tipo;
 	private Date dataCriacao;
 	
+	@NotNull(message = "Selecione o campo data de criação!")
+	@Past(message = "A data deve ser menor ou igual a data atual!")
 	public Date getDataCriacao() {
 		return dataCriacao;
 	}
@@ -60,6 +64,7 @@ public class Curso {
 	public void setDuracao(double duracao) {
 		this.duracao = duracao;
 	}
+	@NotNull(message = "Selecione o campo tipo!")
 	public TipoCurso getTipo() {
 		return tipo;
 	}

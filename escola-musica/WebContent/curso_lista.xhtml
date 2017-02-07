@@ -17,7 +17,7 @@
 	<br/><br/>
 		<h:form>
 		<p:growl/>
-			<p:dataTable value="#{cursoBean.cursos}" var="curso" paginator="true" rows="5" paginatorPosition="bottom" rowsPerPageTemplate="5, 10, 15">
+			<p:dataTable id="tbl-curso" value="#{cursoBean.cursos}" var="curso" paginator="true" rows="5" paginatorPosition="bottom" rowsPerPageTemplate="5, 10, 15">
 				<p:column headerText="Nome" sortBy="#{curso.nome}" filterBy="#{curso.nome}" filterMatchMode="contains" filteredValue="#{cursoBean.cursos}">
 					<h:outputText value="#{curso.nome}"/>
 				</p:column>
@@ -32,12 +32,23 @@
 						<f:convertDateTime pattern="dd/MM/yyyy" />
 					</h:outputText>
 				</p:column>
-				<p:column>
+				<p:column exportable="false">
 					<p:commandLink value="Editar" action="#{cursoBean.editar(curso)}" />
 					<p:commandLink value="Excluir" actionListener="#{cursoBean.prepararExclusao(curso)}" oncomplete="PF('confirmarExclusaoDialog').show()" update="@form" />
 					<!-- update="@form" serve para atualizar a propria tela -->
 				</p:column>
 			</p:dataTable>
+			<br/><br/>
+			 <h:commandLink>
+			 <h:graphicImage value="/resources/img/icons/file_extension_xls.png"/>
+                <p:dataExporter type="xls" target="tbl-curso" fileName="cursos" />
+            </h:commandLink>
+            <h:commandLink>
+            <h:graphicImage value="/resources/img/icons/pdfs-32.png"/>
+                <p:dataExporter type="pdf" target="tbl-curso" fileName="cursos" encoding="iso-8859-1"/>
+            </h:commandLink>
+            
+            
 			<p:confirmDialog message="Deseja excluir o curso de #{cursoBean.curso.nome}?" widgetVar="confirmarExclusaoDialog">
 				<!-- o curso passado em cursoBean.excluir(curso) não é o msm que está no datatable -->
 				<p:commandButton value="Sim" action="#{cursoBean.excluir()}" update="@form" />
