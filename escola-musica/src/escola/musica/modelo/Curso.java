@@ -6,7 +6,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
@@ -33,19 +36,24 @@ public class Curso {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
+	@NotEmpty(message = "Preencha o campo nome!")
+	@Length(min = 2, max = 20, message = "O campo nome deve ter entre 2 e 20 caracteres!")
 	public String getNome() {
 		return nome;
 	}
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+	@NotEmpty(message = "Preencha o campo descrição!")
+	@Length(max = 254, message = "O campo descrição 254 caracteres!")
 	public String getDescricao() {
 		return descricao;
 	}
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
+	@Min(value = 1, message = "A duração não pode ser menor que 1!")
+	@Max(value = 10, message = "A duração não pode ser maior que 10!")
 	public double getDuracao() {
 		return duracao;
 	}
