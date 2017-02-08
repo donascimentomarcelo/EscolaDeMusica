@@ -31,6 +31,7 @@ public class CursoBean {
 		cursosAccordion = CursoDAO.listarCursosAccordion();
 		curso = new Curso();
 	}
+	
 	//String pq vai mudar de página
 	public String salvar()
 	{
