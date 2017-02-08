@@ -49,7 +49,7 @@ public class Curso {
 		this.nome = nome;
 	}
 	@NotEmpty(message = "Preencha o campo descrição!")
-	@Length(max = 254, message = "O campo descrição 254 caracteres!")
+	@Length(max = 255, message = "O campo descrição 255 caracteres!")
 	public String getDescricao() {
 		return descricao;
 	}
@@ -70,6 +70,17 @@ public class Curso {
 	}
 	public void setTipo(TipoCurso tipo) {
 		this.tipo = tipo;
+	}
+	
+	public String obterImagem()
+	{
+		//O método poderia ser criada na classe Bean, ms como acessa diretamente os atributos de Curso
+		//Então é recomendado criar aqui msm
+		//Este método troca é por e â por a e espaço vazio por _
+		return nome.toLowerCase().replace("ã", "a")
+				.replace("é", "e")
+				.replace(" ", "_")
+				.concat(".png");
 	}
 
 }

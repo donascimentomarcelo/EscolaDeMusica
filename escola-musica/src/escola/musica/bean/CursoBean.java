@@ -19,16 +19,17 @@ import escola.musica.modelo.TipoCurso;
 @SessionScoped
 public class CursoBean {
 	
-	private Curso curso = new Curso();
+	private Curso curso;
 	//List do java util
 	private List<TipoCurso> tipos = Arrays.asList(TipoCurso.values());
 	private List<Curso> cursos = new ArrayList<Curso>();
 	private List<Curso> cursosAccordion = new ArrayList<Curso>();
 	
-	public CursoBean()
+	public void iniciarBean()
 	{
 		cursos = new CursoDAO().listarTodos();
-		cursosAccordion = new CursoDAO().listarCursosAccordion();
+		cursosAccordion = CursoDAO.listarCursosAccordion();
+		curso = new Curso();
 	}
 	//String pq vai mudar de página
 	public String salvar()
@@ -97,5 +98,12 @@ public class CursoBean {
 	public void setCursos(List<Curso> cursos) {
 		this.cursos = cursos;
 	}
+	public List<Curso> getCursosAccordion() {
+		return cursosAccordion;
+	}
+	public void setCursosAccordion(List<Curso> cursosAccordion) {
+		this.cursosAccordion = cursosAccordion;
+	}
+	
 
 }
