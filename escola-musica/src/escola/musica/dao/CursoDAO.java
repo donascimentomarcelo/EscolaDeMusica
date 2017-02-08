@@ -45,4 +45,10 @@ public class CursoDAO {
 			entityManager.close();
 			
 		}
+
+		public List<Curso> listarCursosAccordion() {
+			EntityManager entityManager = JPAUtil.getEntityManager();
+			
+			return entityManager.createQuery("from Curso where nome in('')").getResultList();
+		}
 }

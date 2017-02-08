@@ -23,10 +23,12 @@ public class CursoBean {
 	//List do java util
 	private List<TipoCurso> tipos = Arrays.asList(TipoCurso.values());
 	private List<Curso> cursos = new ArrayList<Curso>();
+	private List<Curso> cursosAccordion = new ArrayList<Curso>();
 	
 	public CursoBean()
 	{
 		cursos = new CursoDAO().listarTodos();
+		cursosAccordion = new CursoDAO().listarCursosAccordion();
 	}
 	//String pq vai mudar de página
 	public String salvar()
