@@ -7,15 +7,9 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
-<link type="text/css" rel="stylesheet" href="/resources/css/style.css" />
-<h:head>
-	<title>Cadastro de Cursos</title>
-</h:head>
+<link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/style.css" />
 
-<h:body>
-	<h:form id="form-cursos">
-	<p:growl/>
-		<p:panel styleClass="container-painel" header="Cadastro de Cursos">
+		<p:panel styleClass="container-painel" header="Cadastro de Cursos" rendered="#{cursoBean.curso != null}">
 			<h:panelGrid columns="2">
 			
 				<h:outputLabel value="Nome:"/>
@@ -39,9 +33,9 @@
 				
 			</h:panelGrid>
 			<br></br>
-			<p:commandButton value="Salvar" action="#{cursoBean.salvar}" update="@form"/>
+			<p:commandButton value="Salvar" action="#{cursoBean.salvar}" update="@form" icon="salvar-icon"/>
+			<p:commandButton value="Voltar" action="#{cursoBean.voltar}" update="@form" immediate="true" icon="back-icon"/>
+			<!-- O immediate="true" serve pra retornar para pagina de listagem corretamente -->
 		</p:panel>
-	</h:form>
-</h:body>
 
 </html>

@@ -21,37 +21,56 @@ public class CursoBean {
 	
 	private Curso curso;
 	//List do java util
-	private List<TipoCurso> tipos = Arrays.asList(TipoCurso.values());
+	private List<TipoCurso> tipos;
 	private List<Curso> cursos = new ArrayList<Curso>();
 	private List<Curso> cursosAccordion = new ArrayList<Curso>();
+	//esse método é chamado no pretty-config. Invocado após a pagina ser carregada
+	//como se fossem carregado o controller na rota do angular.
+	private Curso cursoExclusao;
+	//esse atributo cursoExclusao serve para colocar o valor de curso.
 	
 	public void iniciarBean()
 	{
 		cursos = new CursoDAO().listarTodos();
 		cursosAccordion = CursoDAO.listarCursosAccordion();
+		tipos = Arrays.asList(TipoCurso.values());
+		
+	}
+	
+	public void novoCurso()
+	{
 		curso = new Curso();
 	}
 	
+	public void voltar()
+	{
+		curso = null;
+	}
+	
 	//String pq vai mudar de página
-	public String salvar()
+	public void salvar()
 	{
 		//Chama a Classe dao passando o valor para salvar
 		new CursoDAO().salvar(curso);
 		//vai na classe DAO e executa o metodo listarTodos
 		cursos = new CursoDAO().listarTodos();
-		//Limpa o valor de curso
-		curso = new Curso();
+		//se o curso for != null, eu exibo o formulario
+		//se o curso for ==null, eu exibo a listagem
+		//Ao setar curso como nulo, eu escondo o formulario e exibo a lista.
+		curso = null;
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage("Curso salvo com sucesso!"));
-		return "curso_lista?faces-redirect=true";
+		
+		//return "curso_lista?faces-redirect=true";
 	}
 	
-	public String editar(Curso curso)
+	public void editar(Curso curso)
 	{
 		//Nessa linha eu digo que o this.curso é igual ao curso q está vindo do formulario
 		//Eu passo curso como parâmetro
 		this.curso = curso;
-		return "curso_formulario?faces-redirect=true";
+		
+		//return "curso_formulario?faces-redirect=true";
 	}
 	
 	public void prepararExclusao(Curso curso)
@@ -60,12 +79,13 @@ public class CursoBean {
 		//pois está fora do datatable, e sette em curso.
 		//Ao invocar excluir, o método já entende que n o curso é o msm passado 
 		//nessa função, e n precisa passar como parâmetro lá em excluir.
-		this.curso = curso;
+		this.cursoExclusao = curso;
 	}
 	//void pq vai permanecer na msm pagina
 	public void excluir()
 	{
-		new CursoDAO().excluir(curso);
+		//recupero o valor de cursoExclusao do metodo prepararExclusao
+		new CursoDAO().excluir(cursoExclusao);
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Curso excluído com sucesso."));
 		cursos = new CursoDAO().listarTodos();
 		
@@ -104,6 +124,14 @@ public class CursoBean {
 	}
 	public void setCursosAccordion(List<Curso> cursosAccordion) {
 		this.cursosAccordion = cursosAccordion;
+	}
+
+	public Curso getCursoExclusao() {
+		return cursoExclusao;
+	}
+
+	public void setCursoExclusao(Curso cursoExclusao) {
+		this.cursoExclusao = cursoExclusao;
 	}
 	
 

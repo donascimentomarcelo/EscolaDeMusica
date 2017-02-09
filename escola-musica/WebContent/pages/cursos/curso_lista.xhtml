@@ -7,16 +7,12 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
-<h:head>
-	<title>Cursos Cadastrados</title>
-</h:head>
 
-<h:body>
-	<p:panel header="Cursos Cadastrados">
-	<p:button value="Novo Curso" outcome="curso_formulario"/>
+	<p:panel header="Cursos Cadastrados" rendered="#{cursoBean.curso == null}">
+	<p:commandButton value="Novo Curso" action="#{cursoBean.novoCurso}" update="@form" process="@this"/>
+	<!-- O id curso_form foi definido no curso_wrapper -->
 	<br/><br/>
-		<h:form>
-		<p:growl/>
+		
 			<p:dataTable id="tbl-curso" value="#{cursoBean.cursos}" var="curso" paginator="true" rows="5" paginatorPosition="bottom" rowsPerPageTemplate="5, 10, 15">
 				<p:column headerText="Nome" sortBy="#{curso.nome}" filterBy="#{curso.nome}" filterMatchMode="contains" filteredValue="#{cursoBean.cursos}">
 					<h:outputText value="#{curso.nome}"/>
@@ -33,7 +29,8 @@
 					</h:outputText>
 				</p:column>
 				<p:column exportable="false">
-					<p:commandLink value="Editar" action="#{cursoBean.editar(curso)}" />
+					<p:commandLink value="Editar" action="#{cursoBean.editar(curso)}" update=":curso_form" />
+					<!-- Os 2 ponts : do update=":curso_form" é p sair do datatable e procurar o curso_form fora dele -->
 					<p:commandLink value="Excluir" actionListener="#{cursoBean.prepararExclusao(curso)}" oncomplete="PF('confirmarExclusaoDialog').show()" update="@form" />
 					<!-- update="@form" serve para atualizar a propria tela -->
 				</p:column>
@@ -49,13 +46,12 @@
             </h:commandLink>
             
             
-			<p:confirmDialog message="Deseja excluir o curso de #{cursoBean.curso.nome}?" widgetVar="confirmarExclusaoDialog">
+			<p:confirmDialog message="Deseja excluir o curso de #{cursoBean.cursoExclusao.nome}?" widgetVar="confirmarExclusaoDialog">
 				<!-- o curso passado em cursoBean.excluir(curso) não é o msm que está no datatable -->
 				<p:commandButton value="Sim" action="#{cursoBean.excluir()}" update="@form" />
 				<p:commandButton value="Não" oncomplete="PF('confirmarExclusaoDialog').hide()"/>
 			</p:confirmDialog>
-		</h:form>
+	
 	</p:panel>
-</h:body>
 
 </html>

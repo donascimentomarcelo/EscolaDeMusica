@@ -1,3 +1,10 @@
 .container-painel{
 	width: 50%;
 }
+
+.salvar-icon{
+	background: url(../img/icons/save.png) !important;
+}
+.back-icon{
+	background: url(../img/icons/back.png) !important;
+}

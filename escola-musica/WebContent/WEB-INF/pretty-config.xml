@@ -10,4 +10,10 @@
 		<!-- Chamo o método iniciarBean para que seja iniciado ao carregar a pagina -->
 		<action onPostBack="false">#{cursoBean.iniciarBean}</action>
 	</url-mapping>
+	<url-mapping id="cursomanutencao">
+		<pattern value="/curso/manutencao/"/>
+		<view-id value="/pages/cursos/curso_wrapper.jsf"/>
+		<!-- Chamo o método iniciarBean para que seja iniciado ao carregar a pagina -->
+		<action onPostBack="false">#{cursoBean.iniciarBean}</action>
+	</url-mapping>
 </pretty-config> 
