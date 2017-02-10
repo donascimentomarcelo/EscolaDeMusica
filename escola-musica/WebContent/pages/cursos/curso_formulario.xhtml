@@ -9,7 +9,8 @@
 
 <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/style.css" />
 
-		<p:panel styleClass="container-painel" header="Cadastro de Cursos" rendered="#{cursoBean.curso != null}">
+		<p:panel styleClass="container-painel" header="Cadastro de Cursos" rendered="#{cursoBean.curso != null}" id="lista-curso-panel">
+		<!-- Essa pagina só será renderizada qnd curso = null -->
 			<h:panelGrid columns="2">
 			
 				<h:outputLabel value="Nome:"/>
@@ -18,7 +19,7 @@
 				<p:inputTextarea value="#{cursoBean.curso.descricao}" cols="22" rows="3"/>
 				
 				<h:outputLabel value="Duração:"/>
-				<p:spinner value="#{cursoBean.curso.duracao}"
+				<p:spinner styleClass="spinner" value="#{cursoBean.curso.duracao}"
 				min="1" stepFactor="0.5" size="1"/>
 				
 				<h:outputLabel value="Tipo:"/>
@@ -33,9 +34,10 @@
 				
 			</h:panelGrid>
 			<br></br>
-			<p:commandButton value="Salvar" action="#{cursoBean.salvar}" update="@form" icon="salvar-icon"/>
+			<p:commandButton value="Salvar" id="btn-salvar" action="#{cursoBean.salvar}" update="@form" icon="salvar-icon"/>
 			<p:commandButton value="Voltar" action="#{cursoBean.voltar}" update="@form" immediate="true" icon="back-icon"/>
 			<!-- O immediate="true" serve pra retornar para pagina de listagem corretamente -->
 		</p:panel>
-
+	<!-- p:blockUI bloquei a tela, o block referencia o id d onde sera bloqueado e o trigger onde dispara a ação. -->	
+	<p:blockUI block="lista-curso-panel" trigger="btn-salvar"/>
 </html>

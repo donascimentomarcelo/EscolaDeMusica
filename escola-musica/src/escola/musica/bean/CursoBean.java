@@ -1,5 +1,6 @@
 package escola.musica.bean;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,17 +9,19 @@ import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import escola.musica.dao.CursoDAO;
+import escola.musica.dao.GenericDao;
 import escola.musica.modelo.Curso;
 import escola.musica.modelo.TipoCurso;
 
 @ManagedBean
-@SessionScoped
-public class CursoBean {
-	
+@ViewScoped
+public class CursoBean implements Serializable {
+
+	private static final long serialVersionUID = -862660658464075437L;
 	private Curso curso;
 	//List do java util
 	private List<TipoCurso> tipos;
@@ -28,6 +31,9 @@ public class CursoBean {
 	//como se fossem carregado o controller na rota do angular.
 	private Curso cursoExclusao;
 	//esse atributo cursoExclusao serve para colocar o valor de curso.
+	
+	private List<Curso> cursosFiltrados;
+	//Lista de cursos filtrados
 	
 	public void iniciarBean()
 	{
@@ -48,12 +54,15 @@ public class CursoBean {
 	}
 	
 	//String pq vai mudar de página
-	public void salvar()
+	public void salvar() throws InterruptedException
 	{
+		Thread.sleep(2000);
+		new GenericDao<Curso>(Curso.class).salvar(curso);
 		//Chama a Classe dao passando o valor para salvar
-		new CursoDAO().salvar(curso);
+		//***new CursoDAO().salvar(curso);****
 		//vai na classe DAO e executa o metodo listarTodos
-		cursos = new CursoDAO().listarTodos();
+		cursos = new GenericDao<Curso>(Curso.class).listarTodos();
+		//***cursos = new CursoDAO().listarTodos();***
 		//se o curso for != null, eu exibo o formulario
 		//se o curso for ==null, eu exibo a listagem
 		//Ao setar curso como nulo, eu escondo o formulario e exibo a lista.
@@ -88,6 +97,7 @@ public class CursoBean {
 		new CursoDAO().excluir(cursoExclusao);
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Curso excluído com sucesso."));
 		cursos = new CursoDAO().listarTodos();
+		cursosFiltrados = null;
 		
 	}
 	
@@ -132,6 +142,14 @@ public class CursoBean {
 
 	public void setCursoExclusao(Curso cursoExclusao) {
 		this.cursoExclusao = cursoExclusao;
+	}
+
+	public List<Curso> getCursosFiltrados() {
+		return cursosFiltrados;
+	}
+
+	public void setCursosFiltrados(List<Curso> cursosFiltrados) {
+		this.cursosFiltrados = cursosFiltrados;
 	}
 	
 

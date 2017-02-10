@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+	<p:panel header="Alunos Cadastrados" rendered="#{alunoBean.aluno == null}">
+	<!-- Essa pagina só será renderizada qnd aluno == null -->
+	<p:commandButton value="Novo Aluno" icon="add-icon" action="#{alunoBean.novoAluno}" update="@form"/>
+	<br/><br/>
+	<p:dataTable value="#{alunoBean.alunos}" var="aluno">
+		<p:column headerText="Nome" styleClass="row">
+			<h:outputText  value="#{aluno.nome}"/>
+		</p:column>
+		<p:column headerText="CPF" styleClass="row">
+			<h:outputText value="#{aluno.cpf}"/>
+		</p:column>
+		<p:column headerText="E-mail" styleClass="row">
+			<h:outputText value="#{aluno.email}"/>
+		</p:column>
+		<p:column headerText="Data de Nascimento" styleClass="row">
+			<h:outputText value="#{aluno.dataNascimento}">
+				<f:convertDateTime pattern="dd/MM/yyyy"/>
+			</h:outputText>
+		</p:column>
+		<p:column headerText="Ativo" styleClass="row">
+			<h:outputText value="#{aluno.ativo ? 'Sim' : 'Não'}"/>
+		</p:column>
+		<p:column styleClass="row">
+			<p:commandButton icon="update-icon" action="#{alunoBean.editar(aluno)}" update="@form"/>
+			<p:commandButton icon="delete-icon"/>
+		</p:column>
+	</p:dataTable>
+	</p:panel>
+
+</html>

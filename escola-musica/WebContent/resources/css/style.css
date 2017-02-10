@@ -8,3 +8,24 @@
 .back-icon{
 	background: url(../img/icons/back.png) !important;
 }
+.add-icon{
+	background: url(../img/icons/add.png) !important;
+}
+.update-icon{
+	background: url(../img/icons/update.png) !important;
+}
+.delete-icon{
+	background: url(../img/icons/delete.png) !important;
+}
+.course-icon{
+	background: url(../img/icons/course.png) !important;
+}
+.student-icon{
+	background: url(../img/icons/student.png) !important;
+}
+.spinner{
+	z-index:0;
+}
+.row{
+	text-align:center;
+}

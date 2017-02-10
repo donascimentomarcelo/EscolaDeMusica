@@ -6,6 +6,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
+	
+<link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/style.css" />
 
 <h:head>
 	<meta charset="iso-8859-1"/>
@@ -15,7 +17,8 @@
 <h:body>
 	<h:form>
 		<p:menubar>
-			<p:menuitem value="Curso" url="/curso/manutencao/"/>
+			<p:menuitem value="Curso" url="/curso/manutencao/" icon="course-icon"/>
+			<p:menuitem value="Alunos" url="/aluno/manutencao/" icon="student-icon"/>
 		</p:menubar>
 	</h:form>
 	<ui:insert name="principal"/>
