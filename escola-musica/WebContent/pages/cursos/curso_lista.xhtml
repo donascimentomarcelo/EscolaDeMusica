@@ -14,7 +14,7 @@
 	<!-- O id curso_form foi definido no curso_wrapper -->
 	<br/><br/>
 		
-			<p:dataTable id="tbl-curso" value="#{cursoBean.cursos}" var="curso" paginator="true" rows="5" paginatorPosition="bottom" rowsPerPageTemplate="5, 10, 15" filteredValue="#{cursoBean.cursosFiltrados}">
+			<p:dataTable id="tbl-curso" value="#{cursoBean.cursos}" var="curso" paginator="true" rows="10" paginatorPosition="bottom" rowsPerPageTemplate="5, 10, 15" filteredValue="#{cursoBean.cursosFiltrados}">
 				<p:column styleClass="row"  headerText="Nome" sortBy="#{curso.nome}" filterBy="#{curso.nome}" filterMatchMode="contains" filteredValue="#{cursoBean.cursos}">
 					<h:outputText value="#{curso.nome}"/>
 				</p:column>

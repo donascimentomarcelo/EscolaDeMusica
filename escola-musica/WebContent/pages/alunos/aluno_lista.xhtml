@@ -12,7 +12,7 @@
 	<!-- Essa pagina só será renderizada qnd aluno == null -->
 	<p:commandButton value="Novo Aluno" icon="add-icon" action="#{alunoBean.novoAluno}" update="@form"/>
 	<br/><br/>
-	<p:dataTable value="#{alunoBean.alunos}" var="aluno">
+	<p:dataTable value="#{alunoBean.alunos}" var="aluno" paginator="true" rows="5" paginatorPosition="bottom" rowsPerPageTemplate="5, 10, 15">
 		<p:column headerText="Nome" styleClass="row">
 			<h:outputText  value="#{aluno.nome}"/>
 		</p:column>
@@ -32,7 +32,6 @@
 		</p:column>
 		<p:column styleClass="row">
 			<p:commandButton icon="update-icon" action="#{alunoBean.editar(aluno)}" update="@form"/>
-			<p:commandButton icon="delete-icon"/>
 		</p:column>
 	</p:dataTable>
 	</p:panel>

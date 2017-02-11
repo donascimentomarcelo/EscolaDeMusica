@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.faces.bean.ViewScoped;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -33,7 +34,12 @@ public class Aluno implements Serializable{
 	private String email;
 	private boolean ativo;
 	private String telefone;
+	private Endereco endereco = new Endereco();
 	
+	
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 	@Id
 	@GeneratedValue(strategy= GenerationType.AUTO)
 	public Integer getId() {
@@ -86,6 +92,14 @@ public class Aluno implements Serializable{
 	}
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
+	}
+	//informa que endereço é embarcado em alunos
+	@Embedded
+	public Endereco getEndereco() {
+		return endereco;
+	}
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
 	}
 	
 	
