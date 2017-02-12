@@ -38,6 +38,7 @@ public class Endereco {
 	}
 	@ManyToOne
 	@JoinColumn(name = "id_cidade")
+	@NotNull(message = "Selecione a cidade!")
 	public Cidade getCidade() {
 		return cidade;
 	}

@@ -8,6 +8,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -47,6 +48,7 @@ public class Cidade implements Serializable {
 		this.nome = nome;
 	}
 	@Enumerated(EnumType.STRING)
+	@NotNull(message = "Selecione o Estado")
 	public Estado getEstado() {
 		return estado;
 	}

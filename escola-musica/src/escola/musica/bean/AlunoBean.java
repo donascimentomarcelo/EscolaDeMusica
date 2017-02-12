@@ -45,7 +45,7 @@ public class AlunoBean implements Serializable{
 	
 	public void salvar()
 	{
-		aluno.getEndereco().setCidade(new GenericDao<Cidade>(Cidade.class).obterPorId(idCidade));
+		//aluno.getEndereco().setCidade(new GenericDao<Cidade>(Cidade.class).obterPorId(idCidade));
 		new GenericDao<Aluno>(Aluno.class).salvar(aluno);
 		aluno = null;
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Aluno cadastrado com sucesso!"));
@@ -55,7 +55,7 @@ public class AlunoBean implements Serializable{
 	public void editar(Aluno aluno)
 	{
 		this.aluno = aluno;
-		idCidade = aluno.getEndereco().getCidade().getId();
+		//idCidade = aluno.getEndereco().getCidade().getId();
 	}
 	public List<Cidade> getCidadesDoEstado()
 	{

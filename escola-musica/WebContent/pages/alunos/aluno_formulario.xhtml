@@ -49,12 +49,12 @@
 					</h:panelGroup>
 					
 					<h:panelGroup id="combo-cidades-group">
-						<p:selectOneMenu id="combo-cidades" value="#{alunoBean.idCidade}" rendered="#{alunoBean.aluno.endereco.cidade.estado != null}"
-						 >
+						<p:selectOneMenu id="combo-cidades" value="#{alunoBean.aluno.endereco.cidade}" rendered="#{alunoBean.aluno.endereco.cidade.estado != null}"
+						 converter="cidadeConverter">
 						 <!--  converter="cidadeConverter" é da classe do conversor -->
 					<!-- pega alunoBean .getAluno .getEndereço .getCidade .getEstado -->
 						<f:selectItem itemLabel=" ::Selecione::" itemValue="#{null}"/>
-							<f:selectItems value="#{alunoBean.cidadesDoEstado}" var="cidade" itemLabel="#{cidade.nome}" itemValue="#{cidade.id}"/>
+							<f:selectItems value="#{alunoBean.cidadesDoEstado}" var="cidade" itemLabel="#{cidade.nome}" itemValue="#{cidade}"/>
 					</p:selectOneMenu>
 					</h:panelGroup>
 					
