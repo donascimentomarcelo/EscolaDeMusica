@@ -58,7 +58,9 @@ public class GenericDao<T> {
 		//getSingleResult vai lançar uma exceção se não achar nhm ou + de 1
 		EntityManager entityManager = JPAUtil.getEntityManager();
 		
-		T t = entityManager.createQuery("from " + classe + " where id = :id ", classe).setParameter(" id ", id).getSingleResult();
+		T t = entityManager.createQuery("from " + classe.getName() + " where id = :id ", classe).setParameter("id", id).getSingleResult();
+		
+		entityManager.close();
 		
 		return t;
 	}

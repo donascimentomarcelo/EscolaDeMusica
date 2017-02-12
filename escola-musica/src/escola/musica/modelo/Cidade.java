@@ -16,9 +16,21 @@ public class Cidade implements Serializable {
 
 	private static final long serialVersionUID = -435146534567764868L;
 	private Integer id;
-	private String nomeString;
+	private String nome;
 	private Estado estado;
 	
+	public Cidade()
+	{
+		
+	}
+	//método contrutor para a classe popula cidade funcionar, ctrl + 3 , contructor. Desmarca o id.
+	public Cidade(String nome, Estado estado) 
+	{
+		super();
+		this.nome = nome;
+		this.estado = estado;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	public Integer getId() {
@@ -27,12 +39,12 @@ public class Cidade implements Serializable {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	@NotEmpty(message = "Preencha o campo nome!")
-	public String getNomeString() {
-		return nomeString;
+	@NotEmpty(message = "Selecione uma cidade!")
+	public String getNome() {
+		return nome;
 	}
-	public void setNomeString(String nomeString) {
-		this.nomeString = nomeString;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 	@Enumerated(EnumType.STRING)
 	public Estado getEstado() {

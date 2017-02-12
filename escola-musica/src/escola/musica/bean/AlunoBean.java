@@ -1,6 +1,7 @@
 package escola.musica.bean;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -8,8 +9,11 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import escola.musica.dao.CidadeDao;
 import escola.musica.dao.GenericDao;
 import escola.musica.modelo.Aluno;
+import escola.musica.modelo.Cidade;
+import escola.musica.modelo.Estado;
 
 @ManagedBean
 //ManagedBean indica que qnd escrever alunoBean na view, vai referenciar a esta classe
@@ -20,10 +24,13 @@ public class AlunoBean implements Serializable{
 	
 	private Aluno aluno;
 	private List<Aluno> alunos;
+	private List<Estado>estados;
+	private Integer idCidade;  
 	
 	public void iniciarBean()
 	{
 		alunos = new GenericDao<Aluno>(Aluno.class).listarTodos();
+		estados = Arrays.asList(Estado.values());
 	}
 	
 	public void novoAluno()
@@ -38,6 +45,7 @@ public class AlunoBean implements Serializable{
 	
 	public void salvar()
 	{
+		aluno.getEndereco().setCidade(new GenericDao<Cidade>(Cidade.class).obterPorId(idCidade));
 		new GenericDao<Aluno>(Aluno.class).salvar(aluno);
 		aluno = null;
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Aluno cadastrado com sucesso!"));
@@ -47,6 +55,11 @@ public class AlunoBean implements Serializable{
 	public void editar(Aluno aluno)
 	{
 		this.aluno = aluno;
+		idCidade = aluno.getEndereco().getCidade().getId();
+	}
+	public List<Cidade> getCidadesDoEstado()
+	{
+		return CidadeDao.obterCidadeDoEstado(aluno.getEndereco().getCidade().getEstado());
 	}
 	
 	public Aluno getAluno() {
@@ -63,6 +76,22 @@ public class AlunoBean implements Serializable{
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public List<Estado> getEstados() {
+		return estados;
+	}
+
+	public void setEstados(List<Estado> estados) {
+		this.estados = estados;
+	}
+
+	public Integer getIdCidade() {
+		return idCidade;
+	}
+
+	public void setIdCidade(Integer idCidade) {
+		this.idCidade = idCidade;
 	}
 	
 

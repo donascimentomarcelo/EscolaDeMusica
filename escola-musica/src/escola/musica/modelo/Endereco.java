@@ -3,6 +3,7 @@ package escola.musica.modelo;
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -21,7 +22,7 @@ public class Endereco {
 	public void setLogradouro(String logradouro) {
 		this.logradouro = logradouro;
 	}
-	@NotEmpty(message = "Preencha o campo número!")
+	@NotNull(message = "Preencha o campo número!")
 	public Integer getNumero() {
 		return numero;
 	}

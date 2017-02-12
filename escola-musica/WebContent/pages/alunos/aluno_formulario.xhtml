@@ -11,20 +11,55 @@
 
 	<p:panel header="Cadastro de Alunos" rendered="#{alunoBean.aluno != null}">
 	<!-- Essa pagina só será renderizada qnd aluno != null -->
-		<h:panelGrid columns="2">
-			<h:outputText value="Nome: "/>
-				<p:inputText value="#{alunoBean.aluno.nome}"/>
-			<h:outputText value="Data de Nascimento: "/>
-				<p:calendar value="#{alunoBean.aluno.dataNascimento}" navigator="true" yearRange="1950:2020" pattern="dd/MM/yyyy"/>
-			<h:outputText value="CPF: "/>
-				<p:inputMask value="#{alunoBean.aluno.cpf}" mask="999.999.999-99"/>
-			<h:outputText value="E-Mail: "/>
-				<p:inputText value="#{alunoBean.aluno.email}"/>
-			<h:outputText value="Telefone: "/>
-				<p:inputMask value="#{alunoBean.aluno.telefone}" mask="(99)9?99999999"/>
-			<h:outputText value="Ativo: "/>
-				<p:selectBooleanCheckbox value="#{alunoBean.aluno.ativo}"/>
-		</h:panelGrid>
+		<p:panel header="Dados do Aluno">
+			<h:panelGrid columns="2">
+				<h:outputText value="Nome: "/>
+					<p:inputText value="#{alunoBean.aluno.nome}"/>
+				<h:outputText value="Data de Nascimento: "/>
+					<p:calendar value="#{alunoBean.aluno.dataNascimento}" navigator="true" yearRange="1950:2020" pattern="dd/MM/yyyy"/>
+				<h:outputText value="CPF: "/>
+					<p:inputMask value="#{alunoBean.aluno.cpf}" mask="999.999.999-99"/>
+				<h:outputText value="E-Mail: "/>
+					<p:inputText value="#{alunoBean.aluno.email}"/>
+				<h:outputText value="Telefone: "/>
+					<p:inputMask value="#{alunoBean.aluno.telefone}" placeHolder="" mask="(99)9?99999999"/>
+				<h:outputText value="Ativo: "/>
+					<p:selectBooleanCheckbox value="#{alunoBean.aluno.ativo}"/>
+			</h:panelGrid>
+		</p:panel>
+		<p:panel header="Dados do Endereço">
+			<h:panelGrid columns="2">
+				<h:outputText value="Logradouro:"/>
+					<p:inputText value="#{alunoBean.aluno.endereco.logradouro}" size="25"/>
+				<h:outputText value="Número:"/>
+					<p:inputText value="#{alunoBean.aluno.endereco.numero}" size="5"/>
+				<h:outputText value="CEP:"/>
+					<p:inputMask mask="99999-999" value="#{alunoBean.aluno.endereco.cep}"/>
+				
+				<h:outputText value="Estado:"/>
+					<p:selectOneMenu value="#{alunoBean.aluno.endereco.cidade.estado}">
+					<!-- pega alunoBean .getAluno .getEndereço .getCidade .getEstado -->
+						<f:selectItem itemLabel=" ::Selecione::" itemValue="#{null}"/>
+							<f:selectItems value="#{alunoBean.estados}" var="estado" itemLabel="#{estado.label}" itemValue="#{estado}"></f:selectItems>
+							<p:ajax event="change" update="combo-cidades-group label-cidades-group"/>
+					</p:selectOneMenu>
+					
+					<h:panelGroup id="label-cidades-group">
+						<h:outputText value="Cidade:" rendered="#{alunoBean.aluno.endereco.cidade.estado != null}"/>
+					</h:panelGroup>
+					
+					<h:panelGroup id="combo-cidades-group">
+						<p:selectOneMenu id="combo-cidades" value="#{alunoBean.idCidade}" rendered="#{alunoBean.aluno.endereco.cidade.estado != null}"
+						 >
+						 <!--  converter="cidadeConverter" é da classe do conversor -->
+					<!-- pega alunoBean .getAluno .getEndereço .getCidade .getEstado -->
+						<f:selectItem itemLabel=" ::Selecione::" itemValue="#{null}"/>
+							<f:selectItems value="#{alunoBean.cidadesDoEstado}" var="cidade" itemLabel="#{cidade.nome}" itemValue="#{cidade.id}"/>
+					</p:selectOneMenu>
+					</h:panelGroup>
+					
+			</h:panelGrid>
+		</p:panel>
 		<br/><br/>
 		<p:commandButton value="Salvar" iocn="salvar-icon" action="#{alunoBean.salvar}" update="@form"/>
 		<p:commandButton value="Voltar" iocn="back-icon" action="#{alunoBean.voltar}" immediate="true" update="@form"/>
