@@ -9,6 +9,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import org.apache.commons.io.IOUtils;
+import org.primefaces.event.FileUploadEvent;
+
 import escola.musica.dao.CidadeDao;
 import escola.musica.dao.GenericDao;
 import escola.musica.modelo.Aluno;
@@ -60,6 +63,16 @@ public class AlunoBean implements Serializable{
 	public List<Cidade> getCidadesDoEstado()
 	{
 		return CidadeDao.obterCidadeDoEstado(aluno.getEndereco().getCidade().getEstado());
+	}
+	
+	public void enviarFoto(FileUploadEvent event)
+	{
+		try {
+			byte[] foto = IOUtils.toByteArray(event.getFile().getInputstream());
+			aluno.setFoto(foto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public Aluno getAluno() {

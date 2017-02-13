@@ -9,7 +9,7 @@
 	<ui:define name="titulo">Cursos</ui:define>
 	
 	<ui:define name="principal">
-		<h:form id="curso_form">
+		<h:form id="curso_form" enctype="multipart/form-data">
 			<p:growl/>
 			<ui:include src="/pages/cursos/curso_lista.xhtml"/>
 			<ui:include src="/pages/cursos/curso_formulario.xhtml"/>

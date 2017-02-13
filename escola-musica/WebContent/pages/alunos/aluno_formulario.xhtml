@@ -13,6 +13,16 @@
 	<!-- Essa pagina só será renderizada qnd aluno != null -->
 		<p:panel header="Dados do Aluno">
 			<h:panelGrid columns="2">
+				<h:outputText value="Foto: "/>
+					<p:fileUpload fileUploadListener="#{alunoBean.enviarFoto}" mode="advanced" dragDropSupport="false"
+         			sizeLimit="100000" fileLimit="3" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" invalidFileMessage="Selecione um arquivo .gif, .jpg ou .png!" auto="true" update="pg-texto-previa pg-imagem-previa"
+         			label="Selecione uma imagem." invalidSizeMessage="O tamanho da imagem é inválido!"/>
+         		<h:panelGroup id="pg-texto-previa">
+         			<h:outputText value="Prévia:"/>
+         		</h:panelGroup>
+         		<h:panelGroup id="pg-imagem-previa">
+         			<p:graphicImage value="#{alunoBean.aluno.imagem}" rendered="#{alunoBean.aluno.foto != null}" cache="false"/>
+         		</h:panelGroup>
 				<h:outputText value="Nome: "/>
 					<p:inputText value="#{alunoBean.aluno.nome}"/>
 				<h:outputText value="Data de Nascimento: "/>
