@@ -3,6 +3,7 @@ package escola.musica.bean;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -11,6 +12,8 @@ import javax.faces.context.FacesContext;
 
 import org.apache.commons.io.IOUtils;
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 
 import escola.musica.dao.CidadeDao;
 import escola.musica.dao.GenericDao;
@@ -73,6 +76,20 @@ public class AlunoBean implements Serializable{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public StreamedContent getImagemAluno()
+	{
+		Map<String, String> mapaParametro = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+		String idAluno = mapaParametro.get("id_aluno");
+		//id_aluno é o id da tag f:param na view
+		if(idAluno != null)
+		{
+			Aluno alunoBanco = new GenericDao<Aluno>(Aluno.class).obterPorId(new Integer(idAluno));
+			//new Integer(idAluno) converte o id no formato string para inteiro
+			return alunoBanco.getImagem();
+		}
+		return new DefaultStreamedContent();
 	}
 	
 	public Aluno getAluno() {

@@ -13,8 +13,16 @@
 	<p:commandButton value="Novo Aluno" icon="add-icon" action="#{alunoBean.novoAluno}" update="@form"/>
 	<br/><br/>
 	<p:dataTable value="#{alunoBean.alunos}" var="aluno" paginator="true" rows="5" paginatorPosition="bottom" rowsPerPageTemplate="5, 10, 15">
+		
 		<p:column headerText="Nome" styleClass="row">
-			<h:outputText  value="#{aluno.nome}"/>
+				<h:outputText value="#{aluno.nome}" id="foto" />
+			<p:tooltip id="toolTipfoto" for="foto">
+				<p:graphicImage value="#{alunoBean.imagemAluno}" cache="false" rendered="#{aluno.foto != null}">
+					<f:param name="id_aluno" value="#{aluno.id}" />
+				</p:graphicImage>
+				<h:outputText value="Sem foto" rendered="#{aluno.foto == null}" />
+			</p:tooltip>
+			<!--  <h:outputText  value="#{aluno.nome}"/> -->
 		</p:column>
 		<p:column headerText="CPF" styleClass="row">
 			<h:outputText value="#{aluno.cpf}"/>
