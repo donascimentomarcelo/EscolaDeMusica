@@ -12,14 +12,34 @@
 	<ui:define name="titulo">Cidades</ui:define>
 	<ui:define name="principal">
 		<p:panel header="Cadastro de Cidades">
-			<p:dataTable value="#{cidadeBean.cidades}" var="cidade" paginator="true" rows="10" paginatorPosition="bottom" rowsPerPageTemplate="5, 10, 15">
-				<p:column headerText="Nome" styleClass="row">
-					<h:outputText value="#{cidade.nome}"/>
-				</p:column>
-				<p:column headerText="Estado" styleClass="row">
-					<h:outputText value="#{cidade.estado.label}"/>
-				</p:column>
-			</p:dataTable>
+			<h:form>
+				<p:toolbar>
+					<f:facet name="left">
+						<p:commandButton value="Novo" icon="ui-icon-document" oncomplete="PF('cadastroCidadeDialog').show()" />
+
+						<span class="ui-separator"> <span
+							class="ui-icon ui-icon-grip-dotted-vertical" />
+						</span>
+						
+						<p:commandButton title="Editar" icon="ui-icon-pencil" />
+						<p:commandButton  title="Excluir" icon="ui-icon-trash" />
+					</f:facet>
+				</p:toolbar>
+				<p:dataTable value="#{cidadeBean.cidades}" var="cidade" paginator="true" rows="10" paginatorPosition="bottom" rowsPerPageTemplate="5, 10, 15">
+					<p:column headerText="Nome" styleClass="row">
+						<h:outputText value="#{cidade.nome}"/>
+					</p:column>
+					<p:column headerText="Estado" styleClass="row">
+						<h:outputText value="#{cidade.estado.label}"/>
+					</p:column>
+				</p:dataTable>
+				<p:dialog header="Nova Cidade" widgetVar="cadastroCidadeDialog" modal="true" resizable="false" draggable="false" id="cidade-dialog" closeOnEscape="true">
+					<h:panelGrid columns="2">
+						<h:outputLabel value="Nome:"/>
+							<p:inputText value="#{cidadeBean.cidade.nome}"/>
+					</h:panelGrid>
+				</p:dialog>
+			</h:form>
 		</p:panel>
 	</ui:define>
 		
