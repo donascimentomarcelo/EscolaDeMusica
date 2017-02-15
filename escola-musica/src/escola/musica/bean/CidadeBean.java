@@ -9,6 +9,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.context.RequestContext;
+
 import escola.musica.dao.GenericDao;
 import escola.musica.modelo.Cidade;
 import escola.musica.modelo.Estado;
@@ -21,6 +23,7 @@ public class CidadeBean implements Serializable{
 	
 	private Cidade cidade = new Cidade();
 	private List<Cidade> cidades;
+	private Cidade cidadeSelecionada;
 	
 	public void iniciarBean()
 	{
@@ -34,6 +37,7 @@ public class CidadeBean implements Serializable{
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Cidade cadastrada com sucesso!"));
 		cidade = new Cidade();
 		consultar();
+		//RequestContext.getCurrentInstance().execute("PF('cadastroCidadeDialog').hide()");
 	}
 	
 	public void consultar()
@@ -75,6 +79,15 @@ public class CidadeBean implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
+	public Cidade getCidadeSelecionada() {
+		return cidadeSelecionada;
+	}
+
+	public void setCidadeSelecionada(Cidade cidadeSelecionada) {
+		this.cidadeSelecionada = cidadeSelecionada;
+	}
+	
 	
 	
 }

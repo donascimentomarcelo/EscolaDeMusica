@@ -12,9 +12,9 @@
 	<ui:define name="titulo">- Cidades</ui:define>
 	<ui:define name="principal">
 		<p:panel header="Cadastro de Cidades">
-			<h:form>
+			<h:form id="form-cidade">
 			<p:growl id="msgs" autoUpdate="true"/>
-				<p:toolbar>
+				<p:toolbar id="toolbar">
 					<f:facet name="left">
 						<p:commandButton value="Novo" icon="ui-icon-document" oncomplete="PF('cadastroCidadeDialog').show()"  process="@this" />
 						<!-- process="@this" serve pra processar apenas o botão e não o formulário -->
@@ -23,11 +23,17 @@
 							class="ui-icon ui-icon-grip-dotted-vertical" />
 						</span>
 						
-						<p:commandButton title="Editar" icon="ui-icon-pencil" />
-						<p:commandButton  title="Excluir" icon="ui-icon-trash" />
+						<p:commandButton title="Editar" icon="ui-icon-pencil" disabled="#{cidadeBean.cidadeSelecionada  == null}" oncomplete="PF('cadastroCidadeDialog').show()" process="@this" update="cidade-dialog">
+							<f:setPropertyActionListener value="#{cidadeBean.cidadeSelecionada}" target="#{cidadeBean.cidade}"/>
+							<!-- setPropertyActionListener serve para setar valores, preenche o form para realizar update  -->
+						</p:commandButton>
+						<p:commandButton  title="Excluir" icon="ui-icon-trash" disabled="#{cidadeBean.cidadeSelecionada  == null}" />
 					</f:facet>
 				</p:toolbar>
-				<p:dataTable value="#{cidadeBean.cidades}" var="cidade" paginator="true" rows="10" paginatorPosition="bottom" rowsPerPageTemplate="5, 10, 15" id="tabela-cidades">
+				<p:dataTable value="#{cidadeBean.cidades}" var="cidade" paginator="true" rows="10" paginatorPosition="bottom" rowsPerPageTemplate="5, 10, 15" id="tabela-cidades" selection="#{cidadeBean.cidadeSelecionada}" selectionMode="single" rowKey="#{cidade.id}">
+					<p:ajax event="rowSelect" update=":form-cidade:toolbar"/>
+					<p:ajax event="rowUnselect" update=":form-cidade:toolbar"/>
+					<!-- :form-cidade: é pra procurar fora do datatable e procurar o id no form cidade -->
 					<p:column headerText="Nome" styleClass="row">
 						<h:outputText value="#{cidade.nome}"/>
 					</p:column>
@@ -45,7 +51,7 @@
 								<f:selectItems value="#{cidadeBean.estados}" var="estado" itemLabel="#{estado.label}" itemValue="#{estado}"/>
 							</p:selectOneMenu>
 					</h:panelGrid>
-					<p:commandButton value="Salvar" icon="ui-icon-disk" action="#{cidadeBean.salvar}" oncomplete="PF('cadastroCidadeDialog').hide()" update="tabela-cidades"/>
+					<p:commandButton value="Salvar" icon="ui-icon-disk" action="#{cidadeBean.salvar}" oncomplete="if(!args.validationFailed) PF('cadastroCidadeDialog').hide()" update="tabela-cidades"/>
 					<p:commandButton value="Cancelar" icon="ui-icon-close" oncomplete="PF('cadastroCidadeDialog').hide()" process="@this" action="#{cidadeBean.cancelar}"/>
 				</p:dialog>
 			</h:form>
