@@ -19,7 +19,7 @@ public class CidadeBean implements Serializable{
 
 	private static final long serialVersionUID = -8077768006424832717L;
 	
-	private Cidade cidade;
+	private Cidade cidade = new Cidade();
 	private List<Cidade> cidades;
 	
 	public void iniciarBean()
@@ -32,13 +32,8 @@ public class CidadeBean implements Serializable{
 	{
 		new GenericDao<Cidade>(Cidade.class).salvar(cidade);
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Cidade cadastrada com sucesso!"));
-		cidade = null;
-		consultar();
-	}
-	
-	public void novaCidade()
-	{
 		cidade = new Cidade();
+		consultar();
 	}
 	
 	public void consultar()
@@ -49,6 +44,11 @@ public class CidadeBean implements Serializable{
 	public List<Estado> getEstados()
 	{
 		return Arrays.asList(Estado.values());
+	}
+	
+	public void cancelar()
+	{
+		cidade = new Cidade();
 	}
 
 

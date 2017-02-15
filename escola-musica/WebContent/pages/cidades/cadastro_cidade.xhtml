@@ -9,13 +9,15 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 	
-	<ui:define name="titulo">Cidades</ui:define>
+	<ui:define name="titulo">- Cidades</ui:define>
 	<ui:define name="principal">
 		<p:panel header="Cadastro de Cidades">
 			<h:form>
+			<p:growl id="msgs" autoUpdate="true"/>
 				<p:toolbar>
 					<f:facet name="left">
-						<p:commandButton value="Novo" icon="ui-icon-document" oncomplete="PF('cadastroCidadeDialog').show()" />
+						<p:commandButton value="Novo" icon="ui-icon-document" oncomplete="PF('cadastroCidadeDialog').show()"  process="@this" />
+						<!-- process="@this" serve pra processar apenas o botão e não o formulário -->
 
 						<span class="ui-separator"> <span
 							class="ui-icon ui-icon-grip-dotted-vertical" />
@@ -25,7 +27,7 @@
 						<p:commandButton  title="Excluir" icon="ui-icon-trash" />
 					</f:facet>
 				</p:toolbar>
-				<p:dataTable value="#{cidadeBean.cidades}" var="cidade" paginator="true" rows="10" paginatorPosition="bottom" rowsPerPageTemplate="5, 10, 15">
+				<p:dataTable value="#{cidadeBean.cidades}" var="cidade" paginator="true" rows="10" paginatorPosition="bottom" rowsPerPageTemplate="5, 10, 15" id="tabela-cidades">
 					<p:column headerText="Nome" styleClass="row">
 						<h:outputText value="#{cidade.nome}"/>
 					</p:column>
@@ -37,7 +39,14 @@
 					<h:panelGrid columns="2">
 						<h:outputLabel value="Nome:"/>
 							<p:inputText value="#{cidadeBean.cidade.nome}"/>
+						<h:outputLabel value="Estado:"/>
+							<p:selectOneMenu value="#{cidadeBean.cidade.estado}">
+								<f:selectItem itemLabel=":: Selecione ::" itemValue="#{null}"/>
+								<f:selectItems value="#{cidadeBean.estados}" var="estado" itemLabel="#{estado.label}" itemValue="#{estado}"/>
+							</p:selectOneMenu>
 					</h:panelGrid>
+					<p:commandButton value="Salvar" icon="ui-icon-disk" action="#{cidadeBean.salvar}" oncomplete="PF('cadastroCidadeDialog').hide()" update="tabela-cidades"/>
+					<p:commandButton value="Cancelar" icon="ui-icon-close" oncomplete="PF('cadastroCidadeDialog').hide()" process="@this" action="#{cidadeBean.cancelar}"/>
 				</p:dialog>
 			</h:form>
 		</p:panel>
