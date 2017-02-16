@@ -36,6 +36,7 @@ public class CidadeBean implements Serializable{
 		new GenericDao<Cidade>(Cidade.class).salvar(cidade);
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Cidade cadastrada com sucesso!"));
 		cidade = new Cidade();
+		cidadeSelecionada = null;
 		consultar();
 		//RequestContext.getCurrentInstance().execute("PF('cadastroCidadeDialog').hide()");
 	}
@@ -53,6 +54,7 @@ public class CidadeBean implements Serializable{
 	public void cancelar()
 	{
 		cidade = new Cidade();
+		cidadeSelecionada = null;
 	}
 
 

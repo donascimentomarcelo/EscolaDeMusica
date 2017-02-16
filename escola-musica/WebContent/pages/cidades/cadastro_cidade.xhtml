@@ -16,7 +16,7 @@
 			<p:growl id="msgs" autoUpdate="true"/>
 				<p:toolbar id="toolbar">
 					<f:facet name="left">
-						<p:commandButton value="Novo" icon="ui-icon-document" oncomplete="PF('cadastroCidadeDialog').show()"  process="@this" />
+						<p:commandButton value="Novo" icon="ui-icon-document" oncomplete="PF('cadastroCidadeDialog').show()"  process="@this" update="cidade-dialog" />
 						<!-- process="@this" serve pra processar apenas o botão e não o formulário -->
 
 						<span class="ui-separator"> <span
@@ -51,8 +51,8 @@
 								<f:selectItems value="#{cidadeBean.estados}" var="estado" itemLabel="#{estado.label}" itemValue="#{estado}"/>
 							</p:selectOneMenu>
 					</h:panelGrid>
-					<p:commandButton value="Salvar" icon="ui-icon-disk" action="#{cidadeBean.salvar}" oncomplete="if(!args.validationFailed) PF('cadastroCidadeDialog').hide()" update="tabela-cidades"/>
-					<p:commandButton value="Cancelar" icon="ui-icon-close" oncomplete="PF('cadastroCidadeDialog').hide()" process="@this" action="#{cidadeBean.cancelar}"/>
+					<p:commandButton value="Salvar" icon="ui-icon-disk" action="#{cidadeBean.salvar}" oncomplete="if(!args.validationFailed) PF('cadastroCidadeDialog').hide()" update="tabela-cidades toolbar"/>
+					<p:commandButton value="Cancelar" icon="ui-icon-close" oncomplete="PF('cadastroCidadeDialog').hide()" process="@this" action="#{cidadeBean.cancelar}" update="tabela-cidades toolbar"/>
 				</p:dialog>
 			</h:form>
 		</p:panel>
