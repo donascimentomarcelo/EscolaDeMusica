@@ -34,7 +34,7 @@ public class GenericDao<T> {
 		
 		entityManager.getTransaction().begin();
 		
-		entityManager.remove(t);
+		entityManager.remove(entityManager.merge(t));
 		
 		entityManager.getTransaction().commit();
 		

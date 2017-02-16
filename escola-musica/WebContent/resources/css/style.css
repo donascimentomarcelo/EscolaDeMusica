@@ -29,3 +29,11 @@
 .row{
 	text-align:center;
 }
+
+.input-update{
+	width:95%;
+}
+
+.select-update{
+	width:500px;
+}

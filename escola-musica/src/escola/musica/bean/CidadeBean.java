@@ -9,7 +9,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.component.datatable.DataTable;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.CellEditEvent;
+import org.primefaces.event.RowEditEvent;
 
 import escola.musica.dao.GenericDao;
 import escola.musica.modelo.Cidade;
@@ -41,6 +44,22 @@ public class CidadeBean implements Serializable{
 		//RequestContext.getCurrentInstance().execute("PF('cadastroCidadeDialog').hide()");
 	}
 	
+	public void onRowEdit(RowEditEvent event)
+	{
+		cidade = (Cidade) event.getObject();
+		//RowEditEvent event vem como parametro da view
+		//event.getObject(); pega o parematro e seta em cidade
+		salvar();
+	}
+	
+	public void onCellEdit(CellEditEvent event)
+	{
+		//pega o valor da célula da tabela para salvar
+		DataTable table = (DataTable) event.getSource();
+		cidade = (Cidade) table.getRowData();
+		salvar();
+	}
+	
 	public void consultar()
 	{
 		cidades = new GenericDao<Cidade>(Cidade.class).listarTodos();
@@ -55,6 +74,15 @@ public class CidadeBean implements Serializable{
 	{
 		cidade = new Cidade();
 		cidadeSelecionada = null;
+	}
+	
+	public void excluir()
+	{
+		new GenericDao<Cidade>(Cidade.class).excluir(cidadeSelecionada);
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Cidade excluida com sucesso!"));
+		cidade = new Cidade();
+		cidadeSelecionada = null;
+		consultar();
 	}
 
 

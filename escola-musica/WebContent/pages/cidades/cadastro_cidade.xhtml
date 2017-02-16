@@ -8,12 +8,17 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
+	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/style.css" />
 	
 	<ui:define name="titulo">- Cidades</ui:define>
 	<ui:define name="principal">
 		<p:panel header="Cadastro de Cidades">
+		
 			<h:form id="form-cidade">
+		
 			<p:growl id="msgs" autoUpdate="true"/>
+		
+		
 				<p:toolbar id="toolbar">
 					<f:facet name="left">
 						<p:commandButton value="Novo" icon="ui-icon-document" oncomplete="PF('cadastroCidadeDialog').show()"  process="@this" update="cidade-dialog" />
@@ -26,21 +31,68 @@
 						<p:commandButton title="Editar" icon="ui-icon-pencil" disabled="#{cidadeBean.cidadeSelecionada  == null}" oncomplete="PF('cadastroCidadeDialog').show()" process="@this" update="cidade-dialog">
 							<f:setPropertyActionListener value="#{cidadeBean.cidadeSelecionada}" target="#{cidadeBean.cidade}"/>
 							<!-- setPropertyActionListener serve para setar valores, preenche o form para realizar update  -->
+							<p:resetInput target="cidade-dialog"/>
+							<!-- Reseta o valor do dialog -->
 						</p:commandButton>
-						<p:commandButton  title="Excluir" icon="ui-icon-trash" disabled="#{cidadeBean.cidadeSelecionada  == null}" />
+						<p:commandButton  title="Excluir" icon="ui-icon-trash" disabled="#{cidadeBean.cidadeSelecionada  == null}" process="@this" oncomplete="PF('exclusaoCidadeDialog').show()"/>
 					</f:facet>
 				</p:toolbar>
-				<p:dataTable value="#{cidadeBean.cidades}" var="cidade" paginator="true" rows="10" paginatorPosition="bottom" rowsPerPageTemplate="5, 10, 15" id="tabela-cidades" selection="#{cidadeBean.cidadeSelecionada}" selectionMode="single" rowKey="#{cidade.id}">
+<!--  
+				<p:contextMenu for="tabela-cidades" widgetVar="cMenu">
+					<p:menuitem value="Edit Cell" icon="ui-icon-search"
+						onclick="PF('cellCidades').showCellEditor();return false;" />
+					<p:menuitem value="Hide Menu" icon="ui-icon-close"
+						onclick="PF('cMenu').hide()" />
+				</p:contextMenu>
+-->
+				<!-- Usa qndo for editar os dados da tabela direto pela células -->
+
+				<p:dataTable value="#{cidadeBean.cidades}" var="cidade" paginator="true" rows="10" paginatorPosition="bottom" rowsPerPageTemplate="5, 10, 15" id="tabela-cidades" selection="#{cidadeBean.cidadeSelecionada}" selectionMode="single" rowKey="#{cidade.id}" editable="true" widgetVar="cellCidades" editMode="cell">
+				<!-- editMode="cell" só usa qnd for editar pelas células -->
+	
 					<p:ajax event="rowSelect" update=":form-cidade:toolbar"/>
+					
 					<p:ajax event="rowUnselect" update=":form-cidade:toolbar"/>
 					<!-- :form-cidade: é pra procurar fora do datatable e procurar o id no form cidade -->
+					
+					<p:ajax event="rowEdit" listener="#{cidadeBean.onRowEdit}" update="tabela-cidades :form-cidade:msgs"/>
+					
+					<p:ajax event="cellEdit" listener="#{cidadeBean.onCellEdit}" update="tabela-cidades :form-cidade:msgs"/>
+					<!-- Usa qnd for editar pelas células da tabela -->
+	
 					<p:column headerText="Nome" styleClass="row">
-						<h:outputText value="#{cidade.nome}"/>
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{cidade.nome}"/>
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{cidade.nome}" styleClass="input-update"/>
+							</f:facet>
+						</p:cellEditor>
 					</p:column>
+					
 					<p:column headerText="Estado" styleClass="row">
-						<h:outputText value="#{cidade.estado.label}"/>
-					</p:column>
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{cidade.estado.label}"/>
+							</f:facet>
+							<f:facet name="input">
+								<p:selectOneMenu value="#{cidade.estado}" style="width:95%;padding-right: 2%;" filter="true" filterMatchMode="contains">
+														<!-- cidade.estado pq cidade é o nome da var -->
+								<f:selectItem itemLabel=":: Selecione ::" itemValue="#{null}"/>
+								<f:selectItems value="#{cidadeBean.estados}" var="estado" itemLabel="#{estado.label}" itemValue="#{estado}"/>
+							</p:selectOneMenu>
+							</f:facet>
+						</p:cellEditor>
+				   </p:column>
+				   
+				   <p:column  style=" width:20px; text-align:center;">
+						<p:rowEditor/>
+				   </p:column>
+				   
 				</p:dataTable>
+	
+	
 				<p:dialog header="Nova Cidade" widgetVar="cadastroCidadeDialog" modal="true" resizable="false" draggable="false" id="cidade-dialog" closeOnEscape="true">
 					<h:panelGrid columns="2">
 						<h:outputLabel value="Nome:"/>
@@ -54,8 +106,19 @@
 					<p:commandButton value="Salvar" icon="ui-icon-disk" action="#{cidadeBean.salvar}" oncomplete="if(!args.validationFailed) PF('cadastroCidadeDialog').hide()" update="tabela-cidades toolbar"/>
 					<p:commandButton value="Cancelar" icon="ui-icon-close" oncomplete="PF('cadastroCidadeDialog').hide()" process="@this" action="#{cidadeBean.cancelar}" update="tabela-cidades toolbar"/>
 				</p:dialog>
+	
+	
+				<p:confirmDialog message="Dseja excluir essa cidade?" widgetVar="exclusaoCidadeDialog" header="Excluir Cidade">
+					<p:commandButton value="Sim" action="#{cidadeBean.excluir}" onclick="PF{'exclusaoCidadeDialog'}.hide()" update="tabela-cidades toolbar" immediate="true"/>
+					<p:commandButton value="Não" onclick="PF{'exclusaoCidadeDialog'}.hide()" update="tabela-cidades toolbar" immediate="true"/>
+				</p:confirmDialog>
+	
+	
 			</h:form>
+	
+	
 		</p:panel>
+	
 	</ui:define>
 		
 </ui:composition>
