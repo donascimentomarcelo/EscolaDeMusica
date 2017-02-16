@@ -16,6 +16,12 @@
   	</listener-class>
   </listener>
   <!-- coisa do spring -->
+	
+  <listener>
+	<listener-class>
+		org.springframework.web.context.request.RequestContextListener
+	</listener-class>
+  </listener>
 
 	<filter>
 		<filter-name>PrimeFaces FileUpload Filter</filter-name>
