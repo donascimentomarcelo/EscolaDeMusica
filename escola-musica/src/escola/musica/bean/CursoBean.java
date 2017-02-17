@@ -8,17 +8,19 @@ import java.util.Date;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
+
 import escola.musica.dao.CursoDAO;
-import escola.musica.dao.GenericDao;
 import escola.musica.modelo.Curso;
 import escola.musica.modelo.TipoCurso;
+import escola.musica.servico.CursoServico;
 
-@ManagedBean
-@ViewScoped
+@Controller("cursoBean")
+@Scope("session")
 public class CursoBean implements Serializable {
 
 	private static final long serialVersionUID = -862660658464075437L;
@@ -35,10 +37,13 @@ public class CursoBean implements Serializable {
 	private List<Curso> cursosFiltrados;
 	//Lista de cursos filtrados
 	
+	@Autowired
+	private CursoServico cursoServico;
+	
 	public void iniciarBean()
 	{
-		cursos = new CursoDAO().listarTodos();
-		cursosAccordion = CursoDAO.listarCursosAccordion();
+		cursos = cursoServico.listarTodos();
+		cursosAccordion = cursoServico.listarCursoAccordion();
 		tipos = Arrays.asList(TipoCurso.values());
 		
 	}
@@ -57,7 +62,15 @@ public class CursoBean implements Serializable {
 	public void salvar() throws InterruptedException
 	{
 		Thread.sleep(2000);
-		new GenericDao<Curso>(Curso.class).salvar(curso);
+		cursoServico.salvar(curso);
+		cursos = cursoServico.listarTodos();
+		curso = null;
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage("Curso salvo com sucesso!"));
+		
+		// *** SEM SPRING
+		
+		/*new GenericDao<Curso>(Curso.class).salvar(curso);
 		//Chama a Classe dao passando o valor para salvar
 		//***new CursoDAO().salvar(curso);****
 		//vai na classe DAO e executa o metodo listarTodos
@@ -71,6 +84,7 @@ public class CursoBean implements Serializable {
 				new FacesMessage("Curso salvo com sucesso!"));
 		
 		//return "curso_lista?faces-redirect=true";
+		 */
 	}
 	
 	public void editar(Curso curso)
@@ -94,7 +108,7 @@ public class CursoBean implements Serializable {
 	public void excluir()
 	{
 		//recupero o valor de cursoExclusao do metodo prepararExclusao
-		new CursoDAO().excluir(cursoExclusao);
+		cursoServico.excluir(cursoExclusao);
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Curso excluído com sucesso."));
 		cursos = new CursoDAO().listarTodos();
 		cursosFiltrados = null;

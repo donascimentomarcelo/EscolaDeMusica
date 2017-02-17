@@ -6,24 +6,26 @@ import java.util.List;
 import java.util.Map;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import org.apache.commons.io.IOUtils;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
 
 import escola.musica.dao.CidadeDao;
 import escola.musica.dao.GenericDao;
 import escola.musica.modelo.Aluno;
 import escola.musica.modelo.Cidade;
 import escola.musica.modelo.Estado;
+import escola.musica.servico.AlunoServico;
 
-@ManagedBean
+@Controller("alunoBean")
 //ManagedBean indica que qnd escrever alunoBean na view, vai referenciar a esta classe
-@SessionScoped
+@Scope("session")
 public class AlunoBean implements Serializable{
 
 	private static final long serialVersionUID = -1025252140353914359L;
@@ -33,9 +35,12 @@ public class AlunoBean implements Serializable{
 	private List<Estado>estados;
 	private Integer idCidade;  
 	
+	@Autowired
+	private AlunoServico alunoServico;
+	
 	public void iniciarBean()
 	{
-		alunos = new GenericDao<Aluno>(Aluno.class).listarTodos();
+		alunos = alunoServico.listarTodos();
 		estados = Arrays.asList(Estado.values());
 	}
 	
@@ -52,10 +57,10 @@ public class AlunoBean implements Serializable{
 	public void salvar()
 	{
 		//aluno.getEndereco().setCidade(new GenericDao<Cidade>(Cidade.class).obterPorId(idCidade));
-		new GenericDao<Aluno>(Aluno.class).salvar(aluno);
+		alunoServico.salvar(aluno);
 		aluno = null;
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Aluno cadastrado com sucesso!"));
-		alunos = new GenericDao<Aluno>(Aluno.class).listarTodos();
+		alunos = alunoServico.listarTodos();
 		
 	}
 	public void editar(Aluno aluno)
