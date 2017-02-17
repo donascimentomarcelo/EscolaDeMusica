@@ -5,21 +5,21 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.component.datatable.DataTable;
-import org.primefaces.context.RequestContext;
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
 
-import escola.musica.dao.GenericDao;
 import escola.musica.modelo.Cidade;
 import escola.musica.modelo.Estado;
+import escola.musica.servico.CidadeService;
 
-@ManagedBean
-@ViewScoped
+@Controller("cidadeBean")
+@Scope("session")
 public class CidadeBean implements Serializable{
 
 	private static final long serialVersionUID = -8077768006424832717L;
@@ -27,6 +27,9 @@ public class CidadeBean implements Serializable{
 	private Cidade cidade = new Cidade();
 	private List<Cidade> cidades;
 	private Cidade cidadeSelecionada;
+	
+	@Autowired
+	private CidadeService cidadeService;
 	
 	public void iniciarBean()
 	{
@@ -36,7 +39,7 @@ public class CidadeBean implements Serializable{
 	
 	public void salvar()
 	{
-		new GenericDao<Cidade>(Cidade.class).salvar(cidade);
+		cidadeService.salvar(cidade);
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Cidade cadastrada com sucesso!"));
 		cidade = new Cidade();
 		cidadeSelecionada = null;
@@ -62,7 +65,7 @@ public class CidadeBean implements Serializable{
 	
 	public void consultar()
 	{
-		cidades = new GenericDao<Cidade>(Cidade.class).listarTodos();
+		cidades = cidadeService.listarTodos();
 	}
 	
 	public List<Estado> getEstados()
@@ -78,7 +81,7 @@ public class CidadeBean implements Serializable{
 	
 	public void excluir()
 	{
-		new GenericDao<Cidade>(Cidade.class).excluir(cidadeSelecionada);
+		cidadeService.excluir(cidadeSelecionada);
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Cidade excluida com sucesso!"));
 		cidade = new Cidade();
 		cidadeSelecionada = null;
