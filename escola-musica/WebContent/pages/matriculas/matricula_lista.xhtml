@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<p:panel header="Lista de Matriculas"
+	rendered="#{matriculaBean.matricula == null}">
+	<p:commandButton value="Nova Matrícula"
+		action="#{matriculaBean.novaMatricula}" update=":matricula_form" />
+	<br/><br/>
+	<p:dataTable value="#{matriculaBean.matriculas}" var="matricula" emptyMessage="Nenhuma matrícula cadastrada...">
+		<p:column headerText="Número" styleClass="row">
+			<p:outputLabel value="#{matricula.numero}"/>
+		</p:column>
+		<p:column headerText="Curso" styleClass="row">
+			<p:outputLabel value="#{matricula.curso.nome}" />
+		</p:column>
+		<p:column headerText="Aluno" styleClass="row">
+			<p:outputLabel value="#{matricula.aluno.nome}"/>
+		</p:column>
+		<p:column headerText="Data da Matrícula" styleClass="row">
+			<p:outputLabel value="#{matricula.dataMatricula}">
+				<f:convertDateTime pattern="dd/MM/yyyy"/>
+			</p:outputLabel>
+		</p:column>
+		<p:column styleClass="row">
+			<p:commandButton icon="update-icon" action="#{matriculaBean.editar(matricula)}" update=":matricula_form"/>
+		</p:column>
+	</p:dataTable>
+
+
+</p:panel>
+
+</html>

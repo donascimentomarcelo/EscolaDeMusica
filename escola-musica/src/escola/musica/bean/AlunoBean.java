@@ -22,6 +22,7 @@ import escola.musica.modelo.Aluno;
 import escola.musica.modelo.Cidade;
 import escola.musica.modelo.Estado;
 import escola.musica.servico.AlunoServico;
+import escola.musica.util.Mensagem;
 
 @Controller("alunoBean")
 //ManagedBean indica que qnd escrever alunoBean na view, vai referenciar a esta classe
@@ -59,7 +60,7 @@ public class AlunoBean implements Serializable{
 		//aluno.getEndereco().setCidade(new GenericDao<Cidade>(Cidade.class).obterPorId(idCidade));
 		alunoServico.salvar(aluno);
 		aluno = null;
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Aluno cadastrado com sucesso!"));
+		Mensagem.mensagemSucesso("Aluno cadastrado com sucesso!");
 		alunos = alunoServico.listarTodos();
 		
 	}

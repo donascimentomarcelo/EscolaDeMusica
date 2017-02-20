@@ -7,6 +7,7 @@ import escola.musica.modelo.Aluno;
 public interface AlunoServico {
 	
 	public void salvar(Aluno aluno);
-	public List<Aluno> listarTodos();
+	
+	public List<Aluno>listarTodos();
 
 }

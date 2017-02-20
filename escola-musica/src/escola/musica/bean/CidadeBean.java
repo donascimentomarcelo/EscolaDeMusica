@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.component.datatable.DataTable;
@@ -17,9 +18,11 @@ import org.springframework.stereotype.Controller;
 import escola.musica.modelo.Cidade;
 import escola.musica.modelo.Estado;
 import escola.musica.servico.CidadeService;
+import escola.musica.util.Mensagem;
 
 @Controller("cidadeBean")
 @Scope("session")
+@ManagedBean
 public class CidadeBean implements Serializable{
 
 	private static final long serialVersionUID = -8077768006424832717L;
@@ -40,7 +43,7 @@ public class CidadeBean implements Serializable{
 	public void salvar()
 	{
 		cidadeService.salvar(cidade);
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Cidade cadastrada com sucesso!"));
+		Mensagem.mensagemSucesso("Cidade cadastrada com sucesso!");
 		cidade = new Cidade();
 		cidadeSelecionada = null;
 		consultar();
@@ -82,7 +85,7 @@ public class CidadeBean implements Serializable{
 	public void excluir()
 	{
 		cidadeService.excluir(cidadeSelecionada);
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Cidade excluida com sucesso!"));
+		Mensagem.mensagemSucesso("Cidade excluida com sucesso!");
 		cidade = new Cidade();
 		cidadeSelecionada = null;
 		consultar();

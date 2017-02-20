@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/style.css" />
+
+	<p:panel header="Cadastro de Matrículas"  rendered="#{matriculaBean.matricula != null}">
+	<p:growl/>
+	<p:panel header="Dados da Matrícula">
+		<h:panelGrid columns="2">
+			<p:outputLabel value="Número:"/>
+				<p:inputText value="#{matriculaBean.matricula.numero}"/>
+				
+			<p:outputLabel value="Aluno"/>
+				<p:selectOneMenu value="#{matriculaBean.matricula.aluno}" converter="alunoConverter" filter="true" filterMatchMode="contains">
+					<f:selectItem itemLabel=":: Selecione ::" itemValue="#{null}"/>
+					<f:selectItems value="#{matriculaBean.alunos}" var="aluno" itemLabel="#{aluno.nome}" itemValue="#{aluno}"/>
+				</p:selectOneMenu>
+				
+			<p:outputLabel value="Curso"/>
+				<p:selectOneMenu value="#{matriculaBean.matricula.curso}" converter="cursoConverter" filter="true" filterMatchMode="contains">
+					<f:selectItem itemLabel=":: Selecione ::" itemValue="#{null}"/>
+					<f:selectItems value="#{matriculaBean.cursos}" var="curso" itemLabel="#{curso.nome}" itemValue="#{curso}"/>
+				</p:selectOneMenu>
+				
+			<p:outputLabel value="Data de Criação"/>
+				<p:calendar value="#{matriculaBean.matricula.dataMatricula}" pattern="dd/MM/yyyy" navigator="true"/>
+			<p:outputLabel value="Data de Desativação"/>
+				<p:calendar value="#{matriculaBean.matricula.dataDesativacao}" pattern="dd/MM/yyyy" navigator="true"/>
+			<p:outputLabel value="Ativo"/>
+				<p:selectBooleanCheckbox value="#{matriculaBean.matricula.ativo}"/>
+		</h:panelGrid>
+	</p:panel>	
+	<br/><br/>
+	<p:commandButton value="Salvar" action="#{matriculaBean.salvar}" update="matricula_form"/>
+	<p:commandButton value="Cancelar" action="#{matriculaBean.cancelar}" update="matricula_form" immediate="true"/>
+	</p:panel>
+</html>

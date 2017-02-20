@@ -13,7 +13,6 @@
 	<url-mapping id="cursomanutencao">
 		<pattern value="/curso/manutencao/"/>
 		<view-id value="/pages/cursos/curso_wrapper.jsf"/>
-		<!-- Chamo o método iniciarBean para que seja iniciado ao carregar a pagina -->
 		<action onPostBack="false">#{cursoBean.iniciarBean}</action>
 	</url-mapping>
 	<url-mapping id="alunomanutencao">
@@ -25,5 +24,10 @@
 		<pattern value="/cidade/manutencao/"/>
 		<view-id value="/pages/cidades/cadastro_cidade.jsf"/>
 		<action onPostBack="false">#{cidadeBean.iniciarBean}</action>
+	</url-mapping>
+	<url-mapping id="matriculamanutencao">
+		<pattern value="/matricula/manutencao/"/>
+		<view-id value="/pages/matriculas/matricula_wrapper.jsf"/>
+		<action onPostBack="false">#{matriculaBean.iniciarBean}</action>
 	</url-mapping>
 </pretty-config> 

@@ -22,13 +22,20 @@ public class MatriculaServicoImpl implements MatriculaServico {
 	@Override
 	public List<Matricula> listarTodos() 
 	{
-		return entityManager.createQuery("from Matricula").getResultList();
+		//return entityManager.createQuery("from Matricula").getResultList();
+		return entityManager.createNamedQuery("Matricula.ListarTodos").getResultList();
 	}
 
 	@Override
 	public void salvar(Matricula matricula) 
 	{
 		entityManager.merge(matricula);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Matricula> listarTodosAtivas() {
+		return entityManager.createNamedQuery("Matricula.ListarTodosAtivos").getResultList();
 	}
 
 }

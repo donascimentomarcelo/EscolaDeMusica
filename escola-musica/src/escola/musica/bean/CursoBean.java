@@ -18,6 +18,7 @@ import escola.musica.dao.CursoDAO;
 import escola.musica.modelo.Curso;
 import escola.musica.modelo.TipoCurso;
 import escola.musica.servico.CursoServico;
+import escola.musica.util.Mensagem;
 
 @Controller("cursoBean")
 @Scope("session")
@@ -65,8 +66,7 @@ public class CursoBean implements Serializable {
 		cursoServico.salvar(curso);
 		cursos = cursoServico.listarTodos();
 		curso = null;
-		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage("Curso salvo com sucesso!"));
+		Mensagem.mensagemSucesso("Curso salvo com sucesso!");
 		
 		// *** SEM SPRING
 		
@@ -109,7 +109,7 @@ public class CursoBean implements Serializable {
 	{
 		//recupero o valor de cursoExclusao do metodo prepararExclusao
 		cursoServico.excluir(cursoExclusao);
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Curso excluído com sucesso."));
+		Mensagem.mensagemSucesso("Curso excluído com sucesso.");
 		cursos = new CursoDAO().listarTodos();
 		cursosFiltrados = null;
 		

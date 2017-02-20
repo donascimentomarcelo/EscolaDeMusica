@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -16,6 +18,10 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
+@NamedQueries({
+	@NamedQuery(name = "Matricula.ListarTodos", query = "from Matricula"),
+	@NamedQuery(name = "Matricula.ListarTodosAtivos", query = "from Matricula where ativo = true")
+})
 public class Matricula implements Serializable{
 
 	private static final long serialVersionUID = 8083358052410703771L;
@@ -27,6 +33,19 @@ public class Matricula implements Serializable{
 	private Curso curso;
 	private boolean ativo = true;
 	private Date dataDesativacao;
+	
+	public Matricula(){}
+	
+	public Matricula(Integer id, Date dataMatricula, String numero, String nomeCurso, String nomeAluno){
+		//ou this.id = id;
+		setId(id);
+		setDataMatricula(dataMatricula);
+		setNumero(numero);
+		setAluno(new Aluno());
+		this.aluno.setNome(nomeAluno);
+		setCurso(new Curso());
+		this.curso.setNome(nomeCurso);
+	}
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
