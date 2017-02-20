@@ -7,13 +7,26 @@
 	xmlns:p="http://primefaces.org/ui">
 	
 	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/style.css" />
-	
+
 	<ui:define name="titulo">- Turmas</ui:define>
+	
+	<ui:define name="header">
+		<script type="text/javascript">
+    function handleDrop(event, ui) {
+        var droppedCar = ui.draggable;
+ 
+        droppedCar.fadeOut('fast');
+    }
+</script>
+	</ui:define>
+
+	
 	
 	<ui:define name="principal">
 		<h:form id="turma_form">
 			<p:fieldset legend="Alunos Matrículados">
-				<p:dataGrid value="#{turmaBean.matriculas}" var="matricula" columns="3">
+			
+				<p:dataGrid id="alunos-matriculados" value="#{turmaBean.matriculas}" var="matricula" columns="3">
 					<p:panel id="painel-matriculas" header="#{matricula.aluno.nome}">
 						<h:panelGrid columns="2">
 							<p:graphicImage value="#{turmaBean.imagemAluno}" cache="false" rendered="#{matricula.aluno.foto != null}" styleClass="size-img">
@@ -28,12 +41,15 @@
 								</h:panelGrid>
 						</h:panelGrid>
 					</p:panel>
-					<p:draggable for="painel-matriculas" revert="true" handle=".ui-panel-titlebar"></p:draggable>
+					<p:draggable for="painel-matriculas" revert="true" handle=".ui-panel-titlebar" stack=".ui-panel"/>
 				</p:dataGrid>
+				
 			</p:fieldset>
+			
 			<p:fieldset legend="Turma de Teoria - 1º ano">
-				<p:outputPanel>
-					<h:outputText value="Arraste a metricula e solte aqui!" rendered="#{empty turmaBean.matriculasInseridas}"/>
+			
+				<p:outputPanel id="drop-area">
+					<h:outputText value="Arraste a matricula e solte aqui!" rendered="#{empty turmaBean.matriculasInseridas}"/>
 					<p:dataTable value="#{turmaBean.matriculasInseridas}" var="matricula" rendered="#{not empty turmaBean.matriculasInseridas}">
 						<p:column headerText="Número">
 							<h:outputText value="#{matricula.numero}"/>
@@ -46,7 +62,13 @@
 						</p:column>
 					</p:dataTable>
 				</p:outputPanel>
+				
 			</p:fieldset>
+			
+			<p:droppable for="drop-area" datasource="alunos-matriculados" onDrop="handleDrop" tolerance="touch" activeStyleClass="ui-state-highlight">
+				<p:ajax listener="#{turmaBean.onMatriculaDrop}" update="drop-area alunos-matriculados"/>
+			</p:droppable>
+			
 		</h:form>
 	</ui:define>
 
