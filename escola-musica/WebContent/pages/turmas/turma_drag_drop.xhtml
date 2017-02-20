@@ -1,0 +1,53 @@
+<ui:composition 
+	template="/pages/layout/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/style.css" />
+	
+	<ui:define name="titulo">- Turmas</ui:define>
+	
+	<ui:define name="principal">
+		<h:form id="turma_form">
+			<p:fieldset legend="Alunos Matrículados">
+				<p:dataGrid value="#{turmaBean.matriculas}" var="matricula" columns="3">
+					<p:panel id="painel-matriculas" header="#{matricula.aluno.nome}">
+						<h:panelGrid columns="2">
+							<p:graphicImage value="#{turmaBean.imagemAluno}" cache="false" rendered="#{matricula.aluno.foto != null}" styleClass="size-img">
+								<f:param name="id_aluno" value="#{matricula.aluno.id}" />
+							</p:graphicImage>
+							<h:outputText value="Sem foto" rendered="#{matricula.aluno.foto == null}" />
+								<h:panelGrid columns="2">
+									<h:outputText value="Matrícula:"/>
+										<h:outputText value="#{matricula.numero}"/>
+									<h:outputText value="Curso:"/>
+										<h:outputText value="#{matricula.curso.nome}"/>
+								</h:panelGrid>
+						</h:panelGrid>
+					</p:panel>
+					<p:draggable for="painel-matriculas" revert="true" handle=".ui-panel-titlebar"></p:draggable>
+				</p:dataGrid>
+			</p:fieldset>
+			<p:fieldset legend="Turma de Teoria - 1º ano">
+				<p:outputPanel>
+					<h:outputText value="Arraste a metricula e solte aqui!" rendered="#{empty turmaBean.matriculasInseridas}"/>
+					<p:dataTable value="#{turmaBean.matriculasInseridas}" var="matricula" rendered="#{not empty turmaBean.matriculasInseridas}">
+						<p:column headerText="Número">
+							<h:outputText value="#{matricula.numero}"/>
+						</p:column>
+						<p:column headerText="Aluno">
+							<h:outputText value="#{matricula.aluno.nome}"/>
+						</p:column>
+						<p:column headerText="Curso">
+							<h:outputText value="#{matricula.curso.nome}"/>
+						</p:column>
+					</p:dataTable>
+				</p:outputPanel>
+			</p:fieldset>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

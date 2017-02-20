@@ -22,8 +22,7 @@ public class MatriculaServicoImpl implements MatriculaServico {
 	@Override
 	public List<Matricula> listarTodos() 
 	{
-		//return entityManager.createQuery("from Matricula").getResultList();
-		return entityManager.createNamedQuery("Matricula.ListarTodos").getResultList();
+		return entityManager.createQuery("from Matricula").getResultList();
 	}
 
 	@Override
@@ -35,7 +34,15 @@ public class MatriculaServicoImpl implements MatriculaServico {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Matricula> listarTodosAtivas() {
+		
 		return entityManager.createNamedQuery("Matricula.ListarTodosAtivos").getResultList();
+	}
+
+	@Override
+	public Matricula obterPorId(Integer id) {
+		
+		return entityManager.find(Matricula.class, id);
+	
 	}
 
 }

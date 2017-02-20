@@ -19,7 +19,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @NamedQueries({
-	@NamedQuery(name = "Matricula.ListarTodos", query = "from Matricula"),
+	@NamedQuery(name = "Matricula.ListarTodos", query = "select new Matricula(id, dataMatricula, numero, aluno.nome, curso.nome) from Matricula"),
 	@NamedQuery(name = "Matricula.ListarTodosAtivos", query = "from Matricula where ativo = true")
 })
 public class Matricula implements Serializable{

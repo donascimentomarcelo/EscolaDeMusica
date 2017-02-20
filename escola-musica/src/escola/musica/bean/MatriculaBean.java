@@ -63,9 +63,9 @@ public class MatriculaBean implements Serializable{
 		matricula = new Matricula();
 	}
 	
-	public void editar(Matricula matricula)
+	public void editar(Integer id)
 	{
-		this.matricula = matricula;
+		this.matricula = matriculaServico.obterPorId(id);
 	}
 	
 	public void cancelar()

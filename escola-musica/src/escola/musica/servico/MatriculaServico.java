@@ -9,6 +9,7 @@ public interface MatriculaServico {
 	public List<Matricula> listarTodos();
 	public void salvar(Matricula matricula);
 	public List<Matricula> listarTodosAtivas();
+	public Matricula obterPorId(Integer id);
 
 	
 }

@@ -30,4 +30,10 @@
 		<view-id value="/pages/matriculas/matricula_wrapper.jsf"/>
 		<action onPostBack="false">#{matriculaBean.iniciarBean}</action>
 	</url-mapping>
+	<url-mapping id="turmamanutencao">
+		<pattern value="/turma/manutencao/"/>
+		<view-id value="/pages/turmas/turma_drag_drop.jsf"/>
+		<action onPostBack="false">#{turmaBean.iniciarBean}</action>
+	</url-mapping>
+	
 </pretty-config> 

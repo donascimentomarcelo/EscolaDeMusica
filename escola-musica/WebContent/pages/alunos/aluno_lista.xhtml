@@ -20,7 +20,7 @@
 				<p:graphicImage value="#{alunoBean.imagemAluno}" cache="false" rendered="#{aluno.foto != null}">
 					<f:param name="id_aluno" value="#{aluno.id}" />
 				</p:graphicImage>
-				<h:outputText value="Sem foto" rendered="#{aluno.foto == null}" />
+				<h:outputText value="Sem foto" rendered="#{aluno.foto == null}"/>
 			</p:tooltip>
 			<!--  <h:outputText  value="#{aluno.nome}"/> -->
 		</p:column>

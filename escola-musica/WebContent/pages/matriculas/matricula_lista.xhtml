@@ -12,7 +12,7 @@
 	<p:commandButton value="Nova Matrícula"
 		action="#{matriculaBean.novaMatricula}" update=":matricula_form" />
 	<br/><br/>
-	<p:dataTable value="#{matriculaBean.matriculas}" var="matricula" emptyMessage="Nenhuma matrícula cadastrada...">
+	<p:dataTable value="#{matriculaBean.matriculas}" var="matricula" emptyMessage="Nenhuma matrícula cadastrada..." paginator="true" rows="5" paginatorPosition="bottom" rowsPerPageTemplate="5, 10, 15">
 		<p:column headerText="Número" styleClass="row">
 			<p:outputLabel value="#{matricula.numero}"/>
 		</p:column>
@@ -28,7 +28,7 @@
 			</p:outputLabel>
 		</p:column>
 		<p:column styleClass="row">
-			<p:commandButton icon="update-icon" action="#{matriculaBean.editar(matricula)}" update=":matricula_form"/>
+			<p:commandButton icon="update-icon" action="#{matriculaBean.editar(matricula.id)}" update=":matricula_form"/>
 		</p:column>
 	</p:dataTable>
 
