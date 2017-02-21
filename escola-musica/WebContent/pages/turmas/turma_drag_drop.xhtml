@@ -11,18 +11,19 @@
 	<ui:define name="titulo">- Turmas</ui:define>
 	
 	<ui:define name="header">
-		<script type="text/javascript">
-    function handleDrop(event, ui) {
-        var droppedCar = ui.draggable;
- 
-        droppedCar.fadeOut('fast');
-    }
-</script>
+	
 	</ui:define>
 
 	
 	
 	<ui:define name="principal">
+		<script type="text/javascript">
+			function handleDrop(event, ui) {
+				var droppedCar = ui.draggable;
+
+				droppedCar.fadeOut('fast');
+			}
+		</script>
 		<h:form id="turma_form">
 			<p:fieldset legend="Alunos Matrículados">
 			
@@ -46,7 +47,7 @@
 				
 			</p:fieldset>
 			
-			<p:fieldset legend="Turma de Teoria - 1º ano">
+			<p:fieldset id="turma" legend="Turma de Teoria - 1º ano">
 			
 				<p:outputPanel id="drop-area">
 					<h:outputText value="Arraste a matricula e solte aqui!" rendered="#{empty turmaBean.matriculasInseridas}"/>
@@ -65,7 +66,7 @@
 				
 			</p:fieldset>
 			
-			<p:droppable for="drop-area" datasource="alunos-matriculados" onDrop="handleDrop" tolerance="touch" activeStyleClass="ui-state-highlight">
+			<p:droppable for="turma" datasource="alunos-matriculados" onDrop="handleDrop" tolerance="touch" activeStyleClass="ui-state-highlight">
 				<p:ajax listener="#{turmaBean.onMatriculaDrop}" update="drop-area alunos-matriculados"/>
 			</p:droppable>
 			
