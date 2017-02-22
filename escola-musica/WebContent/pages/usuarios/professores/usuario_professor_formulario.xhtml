@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/style.css" />
+	
+	<p:panel header="Cadastro de Matrículas"  rendered="#{usuarioProfessorBean.usuarioProfessor != null}">
+	<p:growl/>
+	
+	<p:panel header="Dados do Professor">
+		<h:panelGrid columns="2">
+		
+			<p:outputLabel value="Nome:"/>
+				<p:inputText value="#{usuarioProfessorBean.usuarioProfessor.nome}"/>
+				
+			<p:outputLabel value="E-Mail:"/>
+				<p:inputText value="#{usuarioProfessorBean.usuarioProfessor.email}"/>
+			
+			<p:outputLabel value="Login:"/>
+				<p:inputText value="#{usuarioProfessorBean.usuarioProfessor.login}"/>
+			
+			
+		
+			<p:outputLabel value="Ativo"/>
+				<p:selectBooleanCheckbox value="#{usuarioProfessorBean.usuarioProfessor.ativo}"/>
+				
+		</h:panelGrid>
+	</p:panel>	
+	
+	<br/><br/>
+	<p:commandButton value="Salvar" action="#{usuarioProfessorBean.salvar}" update="professor_form"/>
+	<p:commandButton value="Cancelar" action="#{usuarioProfessorBean.cancelar}" update="professor_form" immediate="true"/>
+	</p:panel>
+</html>

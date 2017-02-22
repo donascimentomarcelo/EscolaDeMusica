@@ -39,5 +39,9 @@
 		<pattern value="/painel/"/>
 		<view-id value="/pages/layout/template.jsf"/>
 	</url-mapping>
-	
+	<url-mapping id="usuarioprofessor">
+		<pattern value="/professor/manutencao/"/>
+		<view-id value="/pages/usuarios/professores/usuario_professor_wrapper.jsf"/>
+		<action onPostBack="false">#{usuarioProfessorBean.iniciarBean}</action>
+	</url-mapping>
 </pretty-config> 

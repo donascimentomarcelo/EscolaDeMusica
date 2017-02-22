@@ -10,7 +10,9 @@
 <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/style.css" />
 
 <h:head>
-	<meta charset="iso-8859-1"/>
+	<ui:define name="header">
+		<meta charset="utf-8"/>
+	</ui:define>
 	<title>Escola Musica <ui:insert name="titulo"/> </title>
 </h:head>
 
@@ -22,6 +24,9 @@
 			<p:menuitem value="Cidades" url="/cidade/manutencao/" icon=""/>
 			<p:menuitem value="Matriculas" url="/matricula/manutencao/" icon=""/>
 			<p:menuitem value="Turmas" url="/turma/manutencao/" icon=""/>
+			<p:submenu label="Usuários">
+				<p:menuitem value="Professor" url="/professor/manutencao/" icon=""/>
+			</p:submenu>
 			<p:menuitem value="Sair" action="#{authenticationContext.logout}" icon=""/>
 		</p:menubar>
 	</h:form>
