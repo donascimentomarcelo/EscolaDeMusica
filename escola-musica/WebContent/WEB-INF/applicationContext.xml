@@ -63,7 +63,7 @@
 	
 	<sec:http auto-config="true">
 		<sec:form-login login-page="/pages/login/login.jsf"
-			default-target-url="/pages/template/main.jsf" always-use-default-target="false"
+			default-target-url="/painel/" always-use-default-target="false"
 			authentication-failure-handler-ref="authenticationFailureHandler"/>
 		<sec:intercept-url pattern="/**" access="ROLE_USER" />
 		<sec:logout success-handler-ref="logoutHandler" delete-cookies="SPRING_SECURITY_REMEMBER_ME_COOKIE,JSESSIONID"/>

@@ -27,9 +27,7 @@ import org.primefaces.model.StreamedContent;
 @Entity
 @ViewScoped
 public class Aluno implements Serializable{
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 4675028755655124230L;
 	private Integer id;
 	private String nome;
