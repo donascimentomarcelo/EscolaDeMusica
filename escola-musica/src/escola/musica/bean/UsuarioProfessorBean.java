@@ -15,7 +15,8 @@ import escola.musica.servico.UsuarioProfessorServico;
 import escola.musica.util.Mensagem;
 
 @Controller("usuarioProfessorBean")
-@Scope("session")
+@Scope("view")
+//para usar o escopo de visão deve ter a classe viewScope
 @ManagedBean
 public class UsuarioProfessorBean implements Serializable {
 
